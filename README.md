@@ -24,3 +24,8 @@ on UNIX-like systems or
     $ python simple_text_editor.py
 
 on Windows 10.
+
+## Todo
+
+* Save files
+* Unit Testing
