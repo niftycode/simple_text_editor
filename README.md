@@ -27,5 +27,10 @@ on Windows 10.
 
 ## Todo
 
-* Save files
+* ~~Save files~~
+* Save files with *txt* file extension
 * Unit Testing
+
+## Changelog
+
+* **18.01.2020**, *Version 1.0.1*: Add 'save as' support
