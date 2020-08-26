@@ -102,18 +102,41 @@ class MainWindow(QMainWindow):
         self.show()
 
     def open_file(self):
-        path = QFileDialog.getOpenFileName(window, "Open")[0]
-        if path:
-            self.text_widget.setPlainText(open(path).read())
-            self.file_path = path
+
+        # path = QFileDialog.getOpenFileName(window, "Open")[0]
+        path, _ = QFileDialog.getOpenFileName(window, "Open", "", "Text documents (*.txt); All files (*.*)")
+
+        try:
+            with open(path, 'r') as f:
+                self.text_widget.setPlainText(f.read())
+                self.file_path = path
+        except Exception as e:
+            self.dialog_critical(str(e))
+
+        # if path:
+        #     self.text_widget.setPlainText(open(path).read())
+        #     self.file_path = path
 
     def save_file(self):
+        # If we don't have a path, we need to use 'Save as'.
         if self.file_path is None:
             self.save_file_as()
+
+        text = self.text_widget.toPlainText()
+
+        try:
+            with open(self.file_path, "w") as f:
+                f.write(text)
+            self.text_widget.document().setModified(False)
+        except Exception as e:
+            self.dialog_critical(str(e))
+
+        """
         else:
             with open(self.file_path, "w") as f:
                 f.write(self.text_widget.toPlainText())
             self.text_widget.document().setModified(False)
+        """
 
     def save_file_as(self):
         path = QFileDialog.getSaveFileName(window, "Save As")[0]
